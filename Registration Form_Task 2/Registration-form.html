@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="form style.css">
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form id="registration-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <label for="profile-image">Profile Image:</label>
+      <input type="file" id="profile-image" name="profile-image">
+      <button type="submit">Submit</button>
+    </form>
+    <div id="registration-data"></div>
+
+    <script>
+      const form = document.getElementById('registration-form');
+      const dataDiv = document.getElementById('registration-data');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const formProps = Object.fromEntries(formData.entries());
+        const data = JSON.stringify(formProps, null, 2);
+        const card = `
+          <div class="card">
+            <img src="https://via.placeholder.com/150" alt="Profile Image">
+            <div class="card-body">
+              <h2>${formProps.name}</h2>
+              <p><strong>Email:</strong> ${formProps.email}</p>
+              <p><strong>Phone:</strong> ${formProps.phone || 'N/A'}</p>
+              <p><strong>Gender:</strong> ${formProps.gender || 'N/A'}</p>
+            </div>
+          </div>
+        `;
+        dataDiv.innerHTML = card;
+        dataDiv.style.display = 'block';
+        form.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
